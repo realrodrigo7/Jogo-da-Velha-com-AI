@@ -1,6 +1,6 @@
-# Jogo da Velha Família Gamer
+# Nicraf - Jogos e Diversão
 
-Um jogo da velha interativo e moderno desenvolvido com HTML, CSS (Tailwind) e JavaScript.
+Portal de jogos online com interface moderna, começando com o clássico Jogo da Velha Família Gamer.
 
 ## 🎮 Características
 
@@ -13,11 +13,16 @@ Um jogo da velha interativo e moderno desenvolvido com HTML, CSS (Tailwind) e Ja
 
 ## 🚀 Como usar
 
+### Online
+Acesse: **https://www.nicraf.com.br/jogodavelhacomai**
+
+### Local
 1. Clone este repositório
-2. Abra o arquivo `index.html` em seu navegador
-3. Digite os nomes dos jogadores (opcional)
-4. Clique nas células do tabuleiro para fazer suas jogadas
-5. Acompanhe o placar e divirta-se!
+2. Abra o arquivo `index.html` em seu navegador para ver a página inicial
+3. Clique em "Jogo da Velha Família Gamer" para jogar
+4. Digite os nomes dos jogadores (opcional)
+5. Clique nas células do tabuleiro para fazer suas jogadas
+6. Acompanhe o placar e divirta-se!
 
 ## 🎯 Funcionalidades
 
