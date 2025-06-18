@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Velha Família Gamer</title>
+    <!-- Adicionar Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
+    <h1 class="text-4xl font-bold mb-8 text-gray-800">Jogo da Velha Família Gamer</h1>
+    
+    <!-- Adicionar formulário de jogadores -->
+    <div class="mb-6 flex gap-4">
+        <div class="flex flex-col items-center">
+            <input type="text" id="jogadorX" placeholder="Nome Jogador X" 
+                   class="px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <div class="mt-2 text-lg">
+                Placar X: <span id="placarX" class="font-bold">0</span>
+            </div>
+        </div>
+        <div class="flex flex-col items-center">
+            <input type="text" id="jogadorO" placeholder="Nome Jogador O"
+                   class="px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <div class="mt-2 text-lg">
+                Placar O: <span id="placarO" class="font-bold">0</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-xl mb-4" id="statusJogo">Vez do Jogador: X</div>
+    
+    <div class="grid grid-cols-3 gap-2 bg-white p-4 rounded-lg shadow-lg">
+        <button onclick="fazerJogada(0)" class="w-24 h-24 bg-gray-200 hover:bg-gray-300 text-4xl font-bold rounded transition-colors duration-200" aria-label="Célula 1 do tabuleiro"></button>
+        <button onclick="fazerJogada(1)" class="w-24 h-24 bg-gray-200 hover:bg-gray-300 text-4xl font-bold rounded transition-colors duration-200" aria-label="Célula 2 do tabuleiro"></button>
+        <button onclick="fazerJogada(2)" class="w-24 h-24 bg-gray-200 hover:bg-gray-300 text-4xl font-bold rounded transition-colors duration-200" aria-label="Célula 3 do tabuleiro"></button>
+        <button onclick="fazerJogada(3)" class="w-24 h-24 bg-gray-200 hover:bg-gray-300 text-4xl font-bold rounded transition-colors duration-200" aria-label="Célula 4 do tabuleiro"></button>
+        <button onclick="fazerJogada(4)" class="w-24 h-24 bg-gray-200 hover:bg-gray-300 text-4xl font-bold rounded transition-colors duration-200" aria-label="Célula 5 do tabuleiro"></button>
+        <button onclick="fazerJogada(5)" class="w-24 h-24 bg-gray-200 hover:bg-gray-300 text-4xl font-bold rounded transition-colors duration-200" aria-label="Célula 6 do tabuleiro"></button>
+        <button onclick="fazerJogada(6)" class="w-24 h-24 bg-gray-200 hover:bg-gray-300 text-4xl font-bold rounded transition-colors duration-200" aria-label="Célula 7 do tabuleiro"></button>
+        <button onclick="fazerJogada(7)" class="w-24 h-24 bg-gray-200 hover:bg-gray-300 text-4xl font-bold rounded transition-colors duration-200" aria-label="Célula 8 do tabuleiro"></button>
+        <button onclick="fazerJogada(8)" class="w-24 h-24 bg-gray-200 hover:bg-gray-300 text-4xl font-bold rounded transition-colors duration-200" aria-label="Célula 9 do tabuleiro"></button>
+    </div>
+    
+    <div class="flex gap-4 mt-6">
+        <button onclick="reiniciarJogo()" class="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 font-semibold">
+            Reiniciar Partida
+        </button>
+        <button onclick="reiniciarPlacar()" class="px-6 py-2 bg-red-500 text-white rounded hover:bg-red-600 font-semibold">
+            Zerar Placar
+        </button>
+    </div>
+
+    <script>
+        let jogadorAtual = 'X';
+        let tabuleiro = ['', '', '', '', '', '', '', '', ''];
+        let jogoAtivo = true;
+        let placarX = 0;
+        let placarO = 0;
+
+        function getNomeJogador(simbolo) {
+            const input = document.getElementById(`jogador${simbolo}`);
+            return input.value.trim() || `Jogador ${simbolo}`;
+        }
+
+        function atualizarPlacar() {
+            document.getElementById('placarX').textContent = placarX;
+            document.getElementById('placarO').textContent = placarO;
+        }
+
+        function fazerJogada(indice) {
+            if (tabuleiro[indice] === '' && jogoAtivo) {
+                tabuleiro[indice] = jogadorAtual;
+                const botoes = document.querySelectorAll('.grid button');
+                const botaoAtual = botoes[indice];
+                
+                if (jogadorAtual === 'X') {
+                    botaoAtual.textContent = 'X';
+                    botaoAtual.classList.add('bg-blue-200', 'text-blue-700');
+                    botaoAtual.classList.remove('bg-gray-200', 'hover:bg-gray-300');
+                } else {
+                    botaoAtual.textContent = 'O';
+                    botaoAtual.classList.add('bg-red-200', 'text-red-700');
+                    botaoAtual.classList.remove('bg-gray-200', 'hover:bg-gray-300');
+                }
+                
+                if (verificarVitoria()) {
+                    const nomeVencedor = getNomeJogador(jogadorAtual);
+                    document.getElementById('statusJogo').textContent = `${nomeVencedor} venceu!`;
+                    if (jogadorAtual === 'X') placarX++;
+                    else placarO++;
+                    atualizarPlacar();
+                    jogoAtivo = false;
+                } else if (tabuleiro.every(celula => celula !== '')) {
+                    document.getElementById('statusJogo').textContent = 'Empate!';
+                    jogoAtivo = false;
+                } else {
+                    jogadorAtual = jogadorAtual === 'X' ? 'O' : 'X';
+                    const proximoJogador = getNomeJogador(jogadorAtual);
+                    document.getElementById('statusJogo').textContent = `Vez de: ${proximoJogador}`;
+                }
+            }
+        }
+
+        function verificarVitoria() {
+            const combinacoesVitoria = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Linhas
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Colunas
+                [0, 4, 8], [2, 4, 6] // Diagonais
+            ];
+
+            return combinacoesVitoria.some(combinacao => {
+                const [a, b, c] = combinacao;
+                return tabuleiro[a] && 
+                       tabuleiro[a] === tabuleiro[b] && 
+                       tabuleiro[a] === tabuleiro[c];
+            });
+        }
+
+        function reiniciarJogo() {
+            jogadorAtual = 'X';
+            tabuleiro = ['', '', '', '', '', '', '', '', ''];
+            jogoAtivo = true;
+            
+            const botoes = document.querySelectorAll('.grid button');
+            botoes.forEach(botao => {
+                botao.textContent = '';
+                botao.classList.remove('bg-blue-200', 'bg-red-200', 'text-blue-700', 'text-red-700');
+                botao.classList.add('bg-gray-200', 'hover:bg-gray-300');
+            });
+            
+            const proximoJogador = getNomeJogador('X');
+            document.getElementById('statusJogo').textContent = `Vez de: ${proximoJogador}`;
+        }
+
+        function reiniciarPlacar() {
+            placarX = 0;
+            placarO = 0;
+            atualizarPlacar();
+            reiniciarJogo();
+        }
+    </script>
+</body>
+</html>
