@@ -18,6 +18,7 @@ Um jogo da velha interativo e moderno desenvolvido com HTML, CSS (Tailwind) e Ja
 3. Digite os nomes dos jogadores (opcional)
 4. Clique nas células do tabuleiro para fazer suas jogadas
 5. Acompanhe o placar e divirta-se!
+6. Voce pode testar online agora, basclicar aqui https://realrodrigo7.github.io/Jogo-da-Velha-com-AI/
 
 ## 🎯 Funcionalidades
 
